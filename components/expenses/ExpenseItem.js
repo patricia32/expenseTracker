@@ -15,7 +15,6 @@ function ExpenseItem({expenseItem}) {
         });
     }
 
-    console.log("item ", expenseItem.item.date)
     return (
         <Pressable 
             style={ ({pressed}) => [

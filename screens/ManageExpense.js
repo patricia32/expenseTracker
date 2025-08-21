@@ -1,11 +1,11 @@
-import { View, Text, StyleSheet, Pressable, TextInput } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import ExpenseForm from "../components/manageExpense/ExpenseForm";
 import { GlobalStyles } from "../constants/styles";
 
 import { ExpensesContext } from "../store/expence-context";
 import { useContext } from "react";
-import ExpenseForm from "../components/manageExpense/ExpenseForm";
 
 function ManageExpense({navigation, route}) {
 
@@ -19,33 +19,25 @@ function ManageExpense({navigation, route}) {
 
     const actionType = route.params.actionType;
 
-//    console.log(expenseItem.id)
-//    console.log(expenseItem.description)
-//    console.log(getFormattedDate(e))
-//    console.log(expenseItem.amount)
-
     function cancelHandler() {
         navigation.goBack();
     }
-    function addHandler() {
-        expensesCtx.addExpense( {
-            expenseData:{
-                 description: 'Test add',
-                amount: 52.13,
-                date: new Date('2025-08-19')
-            }           
-        });
-        navigation.goBack()
-    }
-
-    function updateHandler() {
-        expensesCtx.updateExpense(expenseItem.id,
-            {
-                description: 'Test',
-                amount: 23.42,
-                date: new Date('2025-08-17')
+    function submitHandler(expenceData) {
+        
+        if(actionType === 'update'){
+            expensesCtx.updateExpense(expenseItem.id, expenceData);
+        }
+        else{
+            expensesCtx.addExpense( {
+                expenseData:{
+                    description: expenceData.description,
+                    amount: expenceData.amount,
+                    date: new Date(expenceData.date)
+                }           
             });
-        navigation.goBack();
+        }
+
+        navigation.goBack()
     }
 
     function deleteHandler() {
@@ -56,27 +48,13 @@ function ManageExpense({navigation, route}) {
     return(
         <View style={styles.mainContainer}>
             <View style={styles.inputsContainer}>
-                <ExpenseForm expenseItem={expenseItem}/>
+                <ExpenseForm 
+                    expenseItem={expenseItem} 
+                    actionType={actionType} 
+                    onCancel={cancelHandler} 
+                    onSubmit={submitHandler}
+                />
             </View>
-                
-
-            <View style={styles.buttonsContainer}>
-                <Pressable style={styles.cancel} onPress={cancelHandler}>
-                    <Text style={styles.text}>
-                        Cancel
-                    </Text>
-                </Pressable>
-               
-                {actionType === 'update' ? 
-                    <Pressable style={styles.update} onPress={updateHandler}>
-                        <Text style={styles.text}> Update </Text>
-                    </Pressable>
-                    :
-                    <Pressable style={styles.update} onPress={addHandler}>
-                        <Text style={styles.text}> Add </Text>
-                    </Pressable>
-                }
-            </View >
             
             <View style={styles.deleteContainer}>
                 {actionType === 'update' ? 
@@ -93,9 +71,7 @@ function ManageExpense({navigation, route}) {
                     <></>
                 }
             </View>
-            
        </View>
-        
     )
 }
 export default ManageExpense;

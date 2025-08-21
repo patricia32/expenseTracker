@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         width: '90%',
-        margin: 20,
+        marginTop: 10,
+        marginBottom: 23
     },
     leftText:{
         color: GlobalStyles.colors.primary200,
