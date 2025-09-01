@@ -6,39 +6,55 @@ import Input from "./Input";
 
 function ExpenseForm({expenseItem, onCancel, onSubmit, actionType}) {
 
-    const [inputValues, setInputValues] = useState({
-        amount: expenseItem.amount,
-        date: expenseItem.date,
-        description: expenseItem.description
+    const [inputs, setInputs] = useState({
+        amount: {
+            value: expenseItem.amount !== undefined ? expenseItem.amount.toString() : '',
+            isValid: true
+        },
+        date: {
+            value: expenseItem.date !== undefined ? expenseItem.date : 'YYYY-MM-DD',
+            isValid: true
+        },
+        description: {
+            value: expenseItem.description !== undefined ? expenseItem.description : '',
+            isValid: true
+        }
     });
 
     function changedInputHandler(inputIdentifier, enteredValue){
-        setInputValues((curInputValues) => {
+        setInputs((curInputs) => {
             return{
-                ...curInputValues,
-                [inputIdentifier]: enteredValue
+                ...curInputs,
+                [inputIdentifier]: {value: enteredValue, isValid: true}
             }
         })
     }
 
     function submitHandler(){
         const expenceData = {
-            amount: +inputValues.amount,
-            date: new Date(inputValues.date),
-            description: inputValues.description
+            amount: +inputs.amount.value,
+            date: new Date(inputs.date.value),
+            description: inputs.description.value
         }
 
         const amountIsValid = !isNaN(expenceData.amount) && expenceData.amount > 0;
         const dateIsValid = expenceData.date.toString() !== 'Invalid Date';
-        const isDescriptionValid = (expenceData.description || '').trim().length > 0;
+        const descriptionIsValid = (expenceData.description || '').trim().length > 0;
         
-        if(amountIsValid && dateIsValid && dateIsValid)
+        if(amountIsValid && dateIsValid && descriptionIsValid)
             onSubmit(expenceData)
-        else{
-            Alert.alert('Invalid input', 'Please check your input values')
+        else{            
+            setInputs((curInputs) =>{
+                return {
+                    amount: {value: curInputs.amount.value, isValid: amountIsValid},
+                    date: {value: curInputs.date.value, isValid: dateIsValid},
+                    description: {value: curInputs.description.value, isValid: descriptionIsValid}
+                }
+            })
             return;
         }
     }
+    const inputsValid = inputs.amount.isValid && inputs.date.isValid && inputs.description.isValid
 
     return(
         <View style={styles.mainContainer}>
@@ -46,29 +62,32 @@ function ExpenseForm({expenseItem, onCancel, onSubmit, actionType}) {
                 <Input 
                     label="Amount" 
                     textInputConfig={{
-                        value: inputValues.amount !== undefined ? inputValues.amount.toString() : '',
+                        backgroundColor: inputs.amount.isValid ?  GlobalStyles.colors.primary100 : GlobalStyles.colors.error50,
                         keyboardType: Platform.OS === 'ios' ? 'decimal-pad' : 'numeric',
                         onChangeText: changedInputHandler.bind(this, 'amount'),
-                        
+                        value: inputs.amount.value,
                     }}
                 />
                 <Input 
                     label="Date" 
                     textInputConfig={{
+                        backgroundColor: inputs.date.isValid ?  GlobalStyles.colors.primary100 : GlobalStyles.colors.error50,
                         onChangeText: changedInputHandler.bind(this, 'date'),
-                        value: inputValues.date !== undefined ? inputValues.date : 'YYYY-MM-DD',
                         maxLength: 10,
+                        value: inputs.date.value
                     }}
                     
                 />
                 <Input 
                     label="Description" 
                     textInputConfig={{
-                        value: inputValues.description !== undefined ? inputValues.description : '',
+                        backgroundColor: inputs.description.isValid ?  GlobalStyles.colors.primary100 : GlobalStyles.colors.error50,
+                        value: inputs.description.value,
                         onChangeText: changedInputHandler.bind(this, 'description'),
                         multiline: true,
                     }}
                 />
+                {!inputsValid && ( <Text style={styles.errorMessage}>Please check entered data</Text> )}
             </View>
         
             <View style={styles.buttonsContainer}>
@@ -122,5 +141,12 @@ const styles = StyleSheet.create({
         color: 'white',
         paddingHorizontal: 30,
         padding: 10
+    },
+    errorMessage: {
+        color: GlobalStyles.colors.error500,
+        fontSize: 15,
+        marginTop: 20,
+        textAlign: 'center',
+        fontWeight: 'bold'
     }
 })
