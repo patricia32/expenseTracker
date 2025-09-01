@@ -6,10 +6,12 @@ import { GlobalStyles } from "../constants/styles";
 
 import { ExpensesContext } from "../store/expence-context";
 import { useContext } from "react";
+import { storeExpense } from "../util/http";
 
 function ManageExpense({navigation, route}) {
 
     const expensesCtx = useContext(ExpensesContext);
+
     const expenseItem = {
         id: route.params.id,
         description: route.params.description,
@@ -22,17 +24,27 @@ function ManageExpense({navigation, route}) {
     function cancelHandler() {
         navigation.goBack();
     }
-    function submitHandler(expenceData) {
+    async function submitHandler(expenceData) {
         
         if(actionType === 'update'){
             expensesCtx.updateExpense(expenseItem.id, expenceData);
         }
         else{
+
+            // Store data using Firebase and axios
+
+            const id = await storeExpense(expenceData)
+            //expensesCtx.addExpense({...expenceData, id: id})
+
+
+            // Store data using Context and Redux
+
             expensesCtx.addExpense( {
                 expenseData:{
                     description: expenceData.description,
                     amount: expenceData.amount,
-                    date: new Date(expenceData.date)
+                    date: new Date(expenceData.date),
+                    id: id
                 }           
             });
         }
