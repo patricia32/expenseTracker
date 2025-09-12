@@ -15,7 +15,28 @@ This app allows users to track their personal expenses with a clean and user-fri
 
 All navigation is handled with **React Navigation** and persistent data is stored using **Firebase** and managed via **Axios**.
 
----
+<table style="border: none; cellpadding: 10;">
+  <tr>
+    <td align="center">
+      <h3>All expneses</h3>
+      <img src="https://github.com/user-attachments/assets/b6fef81a-9895-45c6-bfeb-4b6ddf015801" width="190" height="400"/>
+    </td>
+    <td align="center">
+      <h3>Recent expenses</h3>
+        <img src="https://github.com/user-attachments/assets/cb986564-ff7b-4b60-8bf6-845e2642f8ae" width="190" height="400"/>
+    </td>
+    <td align="center">
+      <h3>Add expense</h3>
+      <img src="https://github.com/user-attachments/assets/89035399-b305-44ef-a21e-eaf4ceea006a" width="190" height="400"/>
+    </td>
+    <td align="center">
+      <h3>Manage expense</h3>
+      <img src="https://github.com/user-attachments/assets/09d1a92c-62b7-401a-852c-a71991c262ca" width="190" height="400"/>
+    </td>
+  </tr>
+</table>
+
+
 
 ## 🚀 Technologies Used
 
@@ -27,7 +48,6 @@ All navigation is handled with **React Navigation** and persistent data is store
 - **Props & State** – For handling local component logic
 - **Async Storage / Firebase** – Explored multiple options for persistent data
 
----
 
 ## ✨ Features
 
@@ -39,7 +59,6 @@ All navigation is handled with **React Navigation** and persistent data is store
 - 📱 **Smooth navigation** between screens using bottom tabs and stack navigation  
 - 🎨 **Improved UI/UX design** to match modern mobile app aesthetics  
 
----
 
 ## 🛠 Screens
 
@@ -49,28 +68,6 @@ All navigation is handled with **React Navigation** and persistent data is store
 
 The app uses **bottom tab navigation** for the two list views and a **stack screen** for the manage/edit form.
 
-<table style="border: none; cellpadding: 10;">
-  <tr>
-    <td align="center">
-      <h3>Feed Screen</h3>
-      <img src="https://github.com/user-attachments/assets/09b8dd75-ae67-4061-8396-1e575ee0c2ac" width="200" height="400"/>
-    </td>
-    <td align="center">
-      <h3>Recent Expenses Screen</h3>
-        <img src="https://github.com/user-attachments/assets/cb986564-ff7b-4b60-8bf6-845e2642f8ae" width="200" height="400"/>
-    </td>
-    <td align="center">
-      <h3>Post</h3>
-      <img src="https://github.com/user-attachments/assets/975f093a-7fef-48af-90e1-52698bf739a7" width="400" height="400"/>
-    </td>
-    <td align="center">
-      <h3>Story</h3>
-      <img src="https://github.com/user-attachments/assets/ec02c290-2286-4b4f-b4c3-6b9044a8967f" width="200" height="400"/>
-    </td>
-  </tr>
-</table>
----
-
 ## 🎯 Learning Goals
 
 - Strengthen core **React Native** skills through practical application  
@@ -79,13 +76,11 @@ The app uses **bottom tab navigation** for the two list views and a **stack scre
 - Improve **mobile UI design** and layout techniques  
 - Practice using **Context API** and **Redux** in real-world scenarios
 
----
 
 ## 📌 Notes
 
 This project is still **in progress** and part of a guided course. More advanced features and UI improvements are planned in future updates.
 
----
 
 ## 👩‍💻 Author
 
@@ -93,7 +88,6 @@ Developed by **Patricia Teocan** as part of a learning journey in mobile app dev
 Course: *React Native – The Practical Guide* by Academind  
 Publisher: Packt / O’Reilly  
 
----
 
 ## 📄 License
 
