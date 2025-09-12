@@ -1,4 +1,4 @@
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable, Keyboard } from "react-native";
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import ExpenseForm from "../components/manageExpense/ExpenseForm";
@@ -57,8 +57,12 @@ function ManageExpense({navigation, route}) {
         navigation.goBack();
     }
 
+    function dismissKeyboard(){
+        Keyboard.dismiss();
+    }
     return(
-        <View style={styles.mainContainer}>
+    <Pressable onPress={dismissKeyboard} style={styles.mainContainer}>
+        <View >
             <View style={styles.inputsContainer}>
                 <ExpenseForm 
                     expenseItem={expenseItem} 
@@ -84,6 +88,7 @@ function ManageExpense({navigation, route}) {
                 }
             </View>
        </View>
+       </Pressable>
     )
 }
 export default ManageExpense;

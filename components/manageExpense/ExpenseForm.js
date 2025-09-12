@@ -12,7 +12,7 @@ function ExpenseForm({expenseItem, onCancel, onSubmit, actionType}) {
             isValid: true
         },
         date: {
-            value: expenseItem.date !== undefined ? expenseItem.date : '2025-09-01',
+            value: expenseItem.date !== undefined ? expenseItem.date : 'YYYY-MM-DD',
             isValid: true
         },
         description: {
