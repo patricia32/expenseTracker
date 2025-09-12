@@ -1,4 +1,4 @@
-import { Platform, Pressable, View, Text, StyleSheet, Alert } from "react-native";
+import { Platform, Pressable, View, Text, StyleSheet, Alert, Keyboard } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import { useState } from "react";
 
@@ -56,55 +56,60 @@ function ExpenseForm({expenseItem, onCancel, onSubmit, actionType}) {
     }
     const inputsValid = inputs.amount.isValid && inputs.date.isValid && inputs.description.isValid
 
+    function dismissKeyboard(){
+        Keyboard.dismiss();
+    }
     return(
-        <View style={styles.mainContainer}>
-            <View style={styles.inputsContainer}>
-                <Input 
-                    label="Amount" 
-                    textInputConfig={{
-                        backgroundColor: inputs.amount.isValid ?  GlobalStyles.colors.primary100 : GlobalStyles.colors.error50,
-                        keyboardType: Platform.OS === 'ios' ? 'decimal-pad' : 'numeric',
-                        onChangeText: changedInputHandler.bind(this, 'amount'),
-                        value: inputs.amount.value,
-                    }}
-                />
-                <Input 
-                    label="Date" 
-                    textInputConfig={{
-                        backgroundColor: inputs.date.isValid ?  GlobalStyles.colors.primary100 : GlobalStyles.colors.error50,
-                        onChangeText: changedInputHandler.bind(this, 'date'),
-                        maxLength: 10,
-                        value: inputs.date.value
-                    }}
-                    
-                />
-                <Input 
-                    label="Description" 
-                    textInputConfig={{
-                        backgroundColor: inputs.description.isValid ?  GlobalStyles.colors.primary100 : GlobalStyles.colors.error50,
-                        value: inputs.description.value,
-                        onChangeText: changedInputHandler.bind(this, 'description'),
-                        multiline: true,
-                    }}
-                />
-                {!inputsValid && ( <Text style={styles.errorMessage}>Please check entered data</Text> )}
+        <Pressable onPress={dismissKeyboard} style={styles.mainContainer}>
+            <View>
+                <View style={styles.inputsContainer}>
+                    <Input 
+                        label="Amount" 
+                        textInputConfig={{
+                            backgroundColor: inputs.amount.isValid ?  GlobalStyles.colors.primary100 : GlobalStyles.colors.error50,
+                            keyboardType: Platform.OS === 'ios' ? 'decimal-pad' : 'numeric',
+                            onChangeText: changedInputHandler.bind(this, 'amount'),
+                            value: inputs.amount.value,
+                        }}
+                    />
+                    <Input 
+                        label="Date" 
+                        textInputConfig={{
+                            backgroundColor: inputs.date.isValid ?  GlobalStyles.colors.primary100 : GlobalStyles.colors.error50,
+                            onChangeText: changedInputHandler.bind(this, 'date'),
+                            maxLength: 10,
+                            value: inputs.date.value
+                        }}
+                        
+                    />
+                    <Input 
+                        label="Description" 
+                        textInputConfig={{
+                            backgroundColor: inputs.description.isValid ?  GlobalStyles.colors.primary100 : GlobalStyles.colors.error50,
+                            value: inputs.description.value,
+                            onChangeText: changedInputHandler.bind(this, 'description'),
+                            multiline: true,
+                        }}
+                    />
+                    {!inputsValid && ( <Text style={styles.errorMessage}>Please check entered data</Text> )}
+                </View>
+            
+                <View style={styles.buttonsContainer}>
+                    <Pressable style={styles.cancel} onPress={onCancel}>
+                        <Text style={styles.text}>
+                            Cancel
+                        </Text>
+                    </Pressable>
+                    <Pressable style={styles.update} onPress={submitHandler}>
+                        {actionType === 'update' ?
+                            <Text style={styles.text}> Update </Text>
+                            :
+                            <Text style={styles.text}> Add </Text>
+                        }
+                    </Pressable>
+                </View >
             </View>
-        
-            <View style={styles.buttonsContainer}>
-                <Pressable style={styles.cancel} onPress={onCancel}>
-                    <Text style={styles.text}>
-                        Cancel
-                    </Text>
-                </Pressable>
-                <Pressable style={styles.update} onPress={submitHandler}>
-                    {actionType === 'update' ?
-                        <Text style={styles.text}> Update </Text>
-                        :
-                        <Text style={styles.text}> Add </Text>
-                    }
-                </Pressable>
-            </View >
-        </View>
+        </Pressable>
     )
 }
 export default ExpenseForm;
